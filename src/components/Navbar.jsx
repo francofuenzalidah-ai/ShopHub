@@ -14,7 +14,7 @@ export default function Navbar() {
                 <div className="navbar-auth">
                     <div className="navbar-auth-links">
                         <Link to="/auth" className="btn btn-secondary">Login</Link>
-                        <Link to="/auth" className="btn btn-primary">SignUp</Link>
+                        <Link to="/auth" className="btn btn-primary">Sign up</Link>
                     </div>
                 </div>
             </div>
