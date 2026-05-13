@@ -1,13 +1,13 @@
-import { useState, useContext } from 'react'
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { AuthContext } from '../context/AuthContext'
+import  useAuth  from '../hooks/useAuth'
 import { useNavigate } from 'react-router-dom'
 
 export default function AuthPage() {
     const navigate = useNavigate();
     const [mode, setMode] = useState("signup");
     const [error, setError] = useState(null);
-    const { signUp, login } = useContext(AuthContext);
+    const { signUp, login } = useAuth();
 
     const {
         register,
