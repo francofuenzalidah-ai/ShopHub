@@ -1,13 +1,23 @@
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import  useAuth  from '../hooks/useAuth'
-import { useNavigate } from 'react-router-dom'
+import useAuth from '../hooks/useAuth'
+import { useNavigate, useParams } from 'react-router-dom'
 
 export default function AuthPage() {
+    const { type } = useParams();
     const navigate = useNavigate();
-    const [mode, setMode] = useState("signup");
+    //const [mode, setMode] = useState("signup");
     const [error, setError] = useState(null);
     const { signUp, login } = useAuth();
+
+    let currentType;
+    if (type === "signup") {
+        currentType = "signup";
+    }
+    else if (type === "login") {
+        currentType = "login";
+    }
+
 
     const {
         register,
@@ -18,10 +28,10 @@ export default function AuthPage() {
     function onSubmit(data) {
         setError(null);
         let result;
-        if (mode === "signup") {
+        if (currentType === "signup") {
             result = signUp(data.email, data.password);
         }
-        else {
+        else if (currentType === "login") {
             result = login(data.email, data.password);
         }
         if (result.success) {
@@ -32,12 +42,20 @@ export default function AuthPage() {
         }
     }
 
+    function navigateLogin() {
+        navigate("/auth/login");
+    }
+
+    function navigateSignup() {
+        navigate("/auth/signup");
+    }
+
     return (
         <div className="page">
             <div className="container">
                 <div className="auth-container">
                     <h1 className="page-title">
-                        {mode === "signup" ? "Sign Up" : "Login"}
+                        {currentType === "signup" ? "Sign Up" : "Login"}
                     </h1>
                     <form className="auth-form" onSubmit={handleSubmit(onSubmit)}>
                         {error && <div className="error-message">{error}</div>}
@@ -79,18 +97,18 @@ export default function AuthPage() {
                         </div>
 
                         <button type="submit" className="btn btn-primary btn-large">
-                            {mode === "signup" ? "Sign Up" : "Login"}
+                            {currentType === "signup" ? "Sign Up" : "Login"}
                         </button>
                     </form>
 
                     <div className="auth-switch">
-                        {mode === "signup" ?
+                        {currentType === "signup" ?
                             <p>
-                                Already have an account?{" "}<span className="auth-link" onClick={() => setMode("login")}>Login</span>
+                                Already have an account?{" "}<span className="auth-link" onClick={navigateLogin}>Login</span>
                             </p>
                             :
                             <p>
-                                Don't have an account?{" "}<span className="auth-link" onClick={() => setMode("signup")}>Sign Up</span>
+                                Don't have an account?{" "}<span className="auth-link" onClick={navigateSignup}>Sign Up</span>
                             </p>}
                     </div>
                 </div>

@@ -4,6 +4,7 @@ import HomePage from './pages/HomePage'
 import CheckoutPage from './pages/CheckoutPage'
 import Navbar from './components/Navbar'
 import AuthProvider from './context/AuthContext'
+import ProductDetailPage from './pages/ProductDetailPage'
 import './App.css'
 
 function App() {
@@ -14,8 +15,10 @@ function App() {
         <Navbar />
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/auth" element={<AuthPage />} />
+          <Route path="/auth/:type" element={<AuthPage />} />
           <Route path="/checkout" element={<CheckoutPage />} />
+          <Route path="/products/:id" element={<ProductDetailPage />} />
+           <Route path="*" element={<HomePage />} />
         </Routes>
       </div>
     </AuthProvider>
